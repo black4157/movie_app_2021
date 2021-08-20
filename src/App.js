@@ -7,14 +7,13 @@ class App extends React.Component{
     isLoading: true,
     movies: []
   };
-
-
-  //컴포넌트가 마운트될 때
+  
   getMovies = async () => {
     const movies = await axios.get("https://yts-proxy.now.sh/list_movies.json");
     console.log("component mounted");
   }
 
+  //컴포넌트가 마운트될 때
   componentDidMount(){
     this.getMovies();
   }
