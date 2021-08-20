@@ -1,38 +1,37 @@
-import React from 'react'
+import React from "react";
+import axios from "axios";
 
-function Food({name, Image}){
-  return (
-    <div>
-      <h1>I love {name}</h1>
-      <img src={Image} alt={name} />
-    </div>
-  );
-}
+class App extends React.Component{
+  
+  state = {
+    isLoading: true,
+    movies: []
+  };
 
-const foodILike = [
-  {
-    id:1,
-    name: "kimchi",
-    Image: "https://health.chosun.com/site/data/img_dir/2020/07/21/2020072103114_0.jpg"
-  },
-  {
-    id:2,
-    name: "gogi",
-    Image: "https://cdn.mindgil.com/news/photo/202104/71169_7768_150.jpg"
+
+  //컴포넌트가 마운트될 때
+  getMovies = async () => {
+    const movies = await axios.get("https://yts-proxy.now.sh/list_movies.json");
+    console.log("component mounted");
   }
-]
 
-function renderFood(dish){
-  return <Food key={dish.id} name={dish.name} Image={dish.Image} />
-}
+  componentDidMount(){
+    this.getMovies();
+  }
 
-function App() {
-  return (
-    <div>
-      {console.log(foodILike.map(renderFood))}
-      {foodILike.map(renderFood)}
-    </div>
-  );
+  //컴포넌트가 업데이트될 때
+  componentDidUpdate(){
+    console.log("component updated");
+  }
+
+  render() {
+    const {isLoading} = this.state;
+    return (
+      <div>
+        {isLoading ? "Loading" : "We are ready"}
+      </div>
+    )
+  }
 }
 
 export default App;
